@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -168,9 +169,16 @@ namespace RaYCiSS
             using (FileStream tmpStream = new FileStream("tmp.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 tmpStream.CopyTo(finalWinStream.BaseStream);
-                File.Delete("tmp.dat");
                 finalWinStream.BaseStream.Position = 4;
                 finalWinStream.Write(NewTotalFileSize);
+            }
+            try
+            {
+                File.Delete("tmp.dat");
+            }
+            catch
+            {
+                Console.WriteLine("Could not delete the temporary created file!\nPlease manually delete \"tmp.dat\".");
             }
         }
     }
